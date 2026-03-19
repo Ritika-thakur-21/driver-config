@@ -8,19 +8,15 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: ride-service
-          uri: lb://RIDE-SERVICE
-          predicates:
-            - Path=/rides/**
-          filters:
-            - StripPrefix=1
-
         - id: driver-service
           uri: lb://DRIVER-SERVICE
           predicates:
-            - Path=/drivers/**
-          filters:
-            - StripPrefix=1
+            - Path=/drivers, /drivers/**
+
+        - id: ride-service
+          uri: lb://RIDE-SERVICE
+          predicates:
+            - Path=/rides, /rides/**
 
 eureka:
   client:
