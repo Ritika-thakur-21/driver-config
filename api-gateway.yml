@@ -5,30 +5,37 @@ spring:
   application:
     name: api-gateway
 
+  config:
+    import: optional:configserver:http://localhost:8888
+
   cloud:
     gateway:
       routes:
         - id: driver-service
           uri: lb://DRIVER-SERVICE
           predicates:
-            - Path=/drivers, /drivers/**
+            - Path=/drivers,/drivers/**
 
         - id: ride-service
           uri: lb://RIDE-SERVICE
           predicates:
-            - Path=/rides, /rides/**
+            - Path=/rides,/rides/**
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
 
-  instance:
-    hostname: localhost
-    prefer-ip-address: true
-
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+
+  tracing:
+    sampling:
+      probability: 1.0
+
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
