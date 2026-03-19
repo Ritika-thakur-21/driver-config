@@ -3,12 +3,16 @@ server:
 
 spring:
   application:
-    name: driver-service
+    name: doctor-service
+
+  config:
+    import: optional:configserver:http://localhost:8888
 
   datasource:
-    url: jdbc:mysql://localhost:3306/driver_db
+    url: jdbc:mysql://localhost:3306/healthcare_db
     username: root
     password: Ritika@123
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
@@ -16,10 +20,10 @@ spring:
     show-sql: true
 
 eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-
   instance:
     hostname: localhost
     prefer-ip-address: true
+
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
